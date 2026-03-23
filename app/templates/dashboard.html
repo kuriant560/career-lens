@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CareerLens Dashboard</title>
+
+    <!-- ✅ CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- ✅ Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🔥 HEADER -->
+    <div class="header">
+        <h1>🚀 CareerLens Dashboard</h1>
+
+        <form method="GET" class="search-box">
+            <input type="text" name="skills" placeholder="python, sql, power bi">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- 💼 JOBS -->
+    <div class="section">
+        <h2>💼 Job Recommendations</h2>
+
+        {% for job in jobs %}
+        <div class="job-card">
+            <h3>{{ job[0] }}</h3>
+            <p>📍 {{ job[1] }}</p>
+            <p><b>🔥 Match Score:</b> {{ job[2] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 📊 FLEX SECTION -->
+    <div class="section flex">
+
+        <!-- 📊 TOP SKILLS -->
+        <div class="box">
+            <h3>🔥 Top Skills</h3>
+
+            {% for skill in top_skills %}
+            <p>{{ skill[0] }} ({{ skill[1] }})</p>
+            {% endfor %}
+
+            <!-- 📊 CHART -->
+            <canvas id="skillsChart"></canvas>
+        </div>
+
+        <!-- 🎯 SKILL GAP -->
+        <div class="box">
+            <h3>🎯 Skill Gap</h3>
+
+            <p><b>Your Skills:</b> {{ user_skills }}</p>
+
+            {% for skill in gaps %}
+            <p>{{ skill[0] }} ({{ skill[1] }})</p>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 📊 CHART SCRIPT -->
+<script>
+    const labels = {{ top_skills | map(attribute=0) | list | safe }};
+    const data = {{ top_skills | map(attribute=1) | list | safe }};
+
+    new Chart(document.getElementById('skillsChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Skill Demand',
+                data: data
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>CareerLens</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+        }
+
+        ```
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        input {
+            width: 60%;
+            padding: 12px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+        }
+
+        .job-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .score {
+            color: green;
+            font-weight: bold;
+        }
+
+        .location {
+            color: #555;
+        }
+
+    </style>
+    ```
+
+</head>
+
+<body>
+
+<div class="container">
+
+    ```
+    <h1>🚀 CareerLens</h1>
+    <p style="text-align:center;">Find jobs based on your skills</p>
+
+    <form method="GET" action="/">
+        <div class="search-box">
+            <input type="text" name="skills" placeholder="python, sql, power bi">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+
+    {% for job in jobs %}
+    <div class="job-card">
+        <h2>{{ job[0] }}</h2>
+        <p class="location">📍 {{ job[1] }}</p>
+        <p class="score">🔥 Match Score: {{ job[2] }}</p>
+    </div>
+    {% endfor %}
+    ```
+
+</div>
+
+</body>
+</html>

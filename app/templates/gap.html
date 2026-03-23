@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Gap</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fa;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .skill {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .demand {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🚀 Skills You Should Learn Next</h1>
+
+<p><b>Your Skills:</b> {{ user_skills }}</p>
+
+{% for skill in gaps %}
+<div class="card">
+    <p class="skill">{{ skill[0] }}</p>
+    <p class="demand">🔥 Demand: {{ skill[1] }}</p>
+</div>
+{% endfor %}
+
+</body>
+</html>
