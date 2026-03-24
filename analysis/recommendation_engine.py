@@ -1,27 +1,31 @@
 import psycopg2
 
+
+# ---------- DB CONNECTION ----------
 def get_connection():
     return psycopg2.connect(
         dbname="careerlens",
-        user="kurian",   # ⚠️ change if needed
-        password="",
+        user="kurian",      # 🔴 change this
+        password="",  # 🔴 change this
         host="localhost",
         port="5432"
     )
 
 
-# -----------------------------
-# JOB RECOMMENDATIONS
-# -----------------------------
+# ---------- NORMALIZE SKILLS ----------
+def normalize_skills(skills):
+    return [s.lower().strip() for s in skills]
+
+
+# ---------- JOB RECOMMENDATIONS ----------
 def get_recommendations(user_skills):
+    user_skills = normalize_skills(user_skills)
+
     conn = get_connection()
     cur = conn.cursor()
 
-    # ✅ Normalize skills
-    user_skills = [s.lower().strip() for s in user_skills]
-
     query = """
-            SELECT DISTINCT j.job_title, j.location, COUNT(*) AS match_score
+            SELECT j.job_title, j.location, COUNT(*) AS match_score
             FROM jobs j
                      JOIN job_skills js ON j.job_id = js.job_id
                      JOIN skills s ON js.skill_id = s.skill_id
@@ -40,9 +44,7 @@ def get_recommendations(user_skills):
     return results
 
 
-# -----------------------------
-# TOP SKILLS
-# -----------------------------
+# ---------- TOP SKILLS ----------
 def get_top_skills():
     conn = get_connection()
     cur = conn.cursor()
@@ -65,10 +67,10 @@ def get_top_skills():
     return results
 
 
-# -----------------------------
-# SKILL GAP
-# -----------------------------
+# ---------- SKILL GAP ----------
 def get_skill_gap(user_skills):
+    user_skills = normalize_skills(user_skills)
+
     conn = get_connection()
     cur = conn.cursor()
 
@@ -82,16 +84,12 @@ def get_skill_gap(user_skills):
             """
 
     cur.execute(query)
-    results = cur.fetchall()
+    all_skills = cur.fetchall()
 
     cur.close()
     conn.close()
 
-    # Remove skills user already has
-    gap = [
-        (skill, demand)
-        for skill, demand in results
-        if skill.lower() not in user_skills
-    ]
+    # remove already known skills
+    gap = [skill for skill in all_skills if skill[0].lower() not in user_skills]
 
-    return gap[:10]
+    return gap[:5]

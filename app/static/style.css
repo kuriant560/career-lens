@@ -1,0 +1,253 @@
+/* ===============================
+   GLOBAL STYLES
+================================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    color: white;
+}
+
+/* ===============================
+   CONTAINER
+================================= */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ===============================
+   HEADER
+================================= */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px 0;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #e2e8f0;
+    position: relative;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 3px;
+    margin-top: 6px;
+    background: linear-gradient(to right, #3b82f6, #22c55e);
+    border-radius: 2px;
+}
+
+/* ===============================
+   SEARCH BOX
+================================= */
+.search-box {
+    margin-top: 15px;
+}
+
+.search-box input {
+    padding: 12px 16px;
+    width: 320px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+
+    background: rgba(15,23,42,0.7);
+    backdrop-filter: blur(10px);
+
+    color: white;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border: 1px solid #3b82f6;
+    box-shadow: 0 0 10px rgba(59,130,246,0.5);
+}
+
+.search-box button {
+    padding: 10px 16px;
+    margin-left: 10px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(to right, #3b82f6, #22c55e);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-box button:hover {
+    opacity: 0.9;
+}
+
+/* ===============================
+   MAIN GRID LAYOUT
+================================= */
+.main-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+    align-items: start;
+}
+
+/* ===============================
+   LEFT PANEL (JOBS)
+================================= */
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 100%;
+}
+
+/* ===============================
+   RIGHT PANEL (SIDEBAR)
+================================= */
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===============================
+   SECTION HEADINGS
+================================= */
+h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #e2e8f0;
+}
+
+/* ===============================
+   JOB CARD (PREMIUM)
+================================= */
+.job-card {
+    padding: 20px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #1e293b, #020617);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+            0 10px 30px rgba(0,0,0,0.6),
+            inset 0 1px 0 rgba(255,255,255,0.05);
+
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* glowing border on hover */
+.job-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(120deg, transparent, rgba(59,130,246,0.4), transparent);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.job-card:hover::before {
+    opacity: 1;
+}
+
+.job-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow:
+            0 25px 60px rgba(0,0,0,0.8),
+            0 0 25px rgba(59,130,246,0.3);
+}
+
+.job-card h3 {
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.location {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #94a3b8;
+}
+
+.score {
+    font-size: 14px;
+    font-weight: bold;
+    color: #22c55e;
+    margin-top: 5px;
+}
+
+/* ===============================
+   RIGHT PANEL BOXES
+================================= */
+.box {
+    padding: 20px;
+    border-radius: 16px;
+
+    background: linear-gradient(145deg, #1e293b, #020617);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+            0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* ===============================
+   SKILL ROW (LIST STYLE)
+================================= */
+.skill-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.skill-row span:first-child {
+    color: #e2e8f0;
+}
+
+.skill-row span:last-child {
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+/* ===============================
+   USER SKILLS TEXT
+================================= */
+.user-skills {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+/* ===============================
+   CHART
+================================= */
+canvas {
+    width: 100% !important;
+    height: 250px !important;
+}
+
+/* ===============================
+   ANIMATIONS
+================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+html {
+    scroll-behavior: smooth;
+}

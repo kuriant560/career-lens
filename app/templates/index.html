@@ -1,101 +1,125 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <title>CareerLens</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f7fb;
-            margin: 0;
-        }
+    <meta charset="UTF-8">
+    <title>CareerLens Dashboard</title>
 
-        ```
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 40px 20px;
-        }
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
-        h1 {
-            text-align: center;
-        }
-
-        .search-box {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        input {
-            width: 60%;
-            padding: 12px;
-            border-radius: 8px 0 0 8px;
-            border: 1px solid #ccc;
-            outline: none;
-        }
-
-        button {
-            padding: 12px 20px;
-            border: none;
-            background: #007bff;
-            color: white;
-            border-radius: 0 8px 8px 0;
-            cursor: pointer;
-        }
-
-        .job-card {
-            background: white;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: 0.2s;
-        }
-
-        .job-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .score {
-            color: green;
-            font-weight: bold;
-        }
-
-        .location {
-            color: #555;
-        }
-
-    </style>
-    ```
-
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
 <div class="container">
 
-    ```
-    <h1>🚀 CareerLens</h1>
-    <p style="text-align:center;">Find jobs based on your skills</p>
+    <!-- HEADER -->
+    <div class="header">
+        <h1 class="title">
+            🚀 CareerLens <span>AI Dashboard</span>
+        </h1>
 
-    <form method="GET" action="/">
-        <div class="search-box">
+        <form method="GET" class="search-box">
             <input type="text" name="skills" placeholder="python, sql, power bi">
             <button type="submit">Search</button>
-        </div>
-    </form>
-
-    {% for job in jobs %}
-    <div class="job-card">
-        <h2>{{ job[0] }}</h2>
-        <p class="location">📍 {{ job[1] }}</p>
-        <p class="score">🔥 Match Score: {{ job[2] }}</p>
+        </form>
     </div>
-    {% endfor %}
-    ```
 
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+
+        <!-- LEFT SIDE (JOBS) -->
+        <div class="left-panel">
+            <h2>💼 Job Recommendations</h2>
+
+            {% for job in jobs %}
+            <div class="job-card">
+                <h3>{{ job[0] }}</h3>
+                <p class="location">📍 {{ job[1] }}</p>
+                <p class="score">🔥 Match Score: {{ job[2] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-panel">
+
+            <!-- TOP SKILLS -->
+            <div class="box">
+                <h3>🔥 Top Skills</h3>
+                {% for skill in top_skills %}
+                <div class="skill-row">
+                    <span>{{ skill[0].title() }}</span>
+                    <span>{{ skill[1] }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- SKILL GAP -->
+            <div class="box">
+                <h3>🎯 Skill Gap</h3>
+                <p class="user-skills">Your Skills: {{ user_skills }}</p>
+
+                {% for skill in skill_gap %}
+                <div class="skill-row">
+                    <span>{{ skill[0].title() }}</span>
+                    <span>{{ skill[1] }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- CHART -->
+            <div class="box">
+                <h3>📊 Skills Chart</h3>
+                <canvas id="skillsChart"></canvas>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<!-- CHART SCRIPT -->
+<script>
+    const labels = {{ top_skills | map(attribute=0) | list | tojson }};
+    const data = {{ top_skills | map(attribute=1) | list | tojson }};
+
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, '#3b82f6');
+    gradient.addColorStop(1, '#22c55e');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: gradient,
+                borderRadius: 8,
+                barThickness: 25
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#e2e8f0' },
+                    grid: { display: false }
+                },
+                y: {
+                    ticks: { color: '#e2e8f0' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                }
+            }
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -3,10 +3,7 @@
 <head>
     <title>CareerLens Dashboard</title>
 
-    <!-- ✅ CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- ✅ Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -14,17 +11,17 @@
 
 <div class="container">
 
-    <!-- 🔥 HEADER -->
+    <!-- HEADER -->
     <div class="header">
         <h1>🚀 CareerLens Dashboard</h1>
 
         <form method="GET" class="search-box">
-            <input type="text" name="skills" placeholder="python, sql, power bi">
+            <input type="text" name="skills" placeholder="python, sql">
             <button type="submit">Search</button>
         </form>
     </div>
 
-    <!-- 💼 JOBS -->
+    <!-- JOBS -->
     <div class="section">
         <h2>💼 Job Recommendations</h2>
 
@@ -32,34 +29,49 @@
         <div class="job-card">
             <h3>{{ job[0] }}</h3>
             <p>📍 {{ job[1] }}</p>
-            <p><b>🔥 Match Score:</b> {{ job[2] }}</p>
+            <p class="match">🔥 Match Score: {{ job[2] }}</p>
         </div>
         {% endfor %}
     </div>
 
-    <!-- 📊 FLEX SECTION -->
+    <!-- FILTER (NEW) -->
+    <div class="section">
+        <h2>🔍 Filter Jobs</h2>
+
+        <form method="GET" class="search-box">
+            <input type="text" name="location" placeholder="Enter location">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    <!-- FLEX SECTION -->
     <div class="section flex">
 
-        <!-- 📊 TOP SKILLS -->
+        <!-- TOP SKILLS -->
         <div class="box">
             <h3>🔥 Top Skills</h3>
 
             {% for skill in top_skills %}
-            <p>{{ skill[0] }} ({{ skill[1] }})</p>
+            <div class="skill">
+                <span>{{ skill[0].title() }}</span>
+                <span>{{ skill[1] }}</span>
+            </div>
             {% endfor %}
 
-            <!-- 📊 CHART -->
             <canvas id="skillsChart"></canvas>
         </div>
 
-        <!-- 🎯 SKILL GAP -->
+        <!-- SKILL GAP -->
         <div class="box">
             <h3>🎯 Skill Gap</h3>
 
             <p><b>Your Skills:</b> {{ user_skills }}</p>
 
             {% for skill in gaps %}
-            <p>{{ skill[0] }} ({{ skill[1] }})</p>
+            <div class="skill">
+                <span>{{ skill[0].title() }}</span>
+                <span>🔥 {{ skill[1] }}</span>
+            </div>
             {% endfor %}
         </div>
 
@@ -67,7 +79,7 @@
 
 </div>
 
-<!-- 📊 CHART SCRIPT -->
+<!-- CHART -->
 <script>
     const labels = {{ top_skills | map(attribute=0) | list | safe }};
     const data = {{ top_skills | map(attribute=1) | list | safe }};
@@ -78,7 +90,8 @@
             labels: labels,
             datasets: [{
                 label: 'Skill Demand',
-                data: data
+                data: data,
+                backgroundColor: '#3b82f6'
             }]
         }
     });

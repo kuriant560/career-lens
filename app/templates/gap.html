@@ -37,7 +37,7 @@
 
 {% for skill in gaps %}
 <div class="card">
-    <p class="skill">{{ skill[0] }}</p>
+    <p class="skill">{{ skill[0].title() }}</p>
     <p class="demand">🔥 Demand: {{ skill[1] }}</p>
 </div>
 {% endfor %}
