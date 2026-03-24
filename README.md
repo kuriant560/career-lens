@@ -131,8 +131,12 @@ python -m app.app
 ---
 
 ## 📸 Screenshots
+<img width="1470" height="870" alt="Screenshot 2026-03-24 at 11 10 17 AM" src="https://github.com/user-attachments/assets/70b9206d-3fca-4bec-8146-f2a0d07e952e" />
 
- <img width="1461" height="838" alt="Screenshot 2026-03-24 at 11 08 33 AM" src="https://github.com/user-attachments/assets/42fd65e5-2fa2-439e-9185-6264aa33d1cb" />
+<img width="402" height="482" alt="Screenshot 2026-03-24 at 11 10 37 AM" src="https://github.com/user-attachments/assets/36d4e051-1e2b-4f52-8159-fb40ec35d0ec" />
+<img width="401" height="333" alt="Screenshot 2026-03-24 at 11 10 52 AM" src="https://github.com/user-attachments/assets/5ba73fa2-be0b-4d14-9aa0-4dac8aa72ec4" />
+
+<img width="400" height="365" alt="Screenshot 2026-03-24 at 11 11 06 AM" src="https://github.com/user-attachments/assets/d37aecbd-22d3-40ab-89da-4f47b3d9c365" />
 
 ---
 
